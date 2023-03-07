@@ -52,5 +52,15 @@ Matrix transpose(const Matrix& sourceMat); // function for transposing a matrix
 
 void printTranspose(const Matrix& sourceMat);
 
+int determ(const Matrix& sourceMat); // Function for calculating the determinant of a matrix 
 
+void printDeterm(const Matrix& sourceMat);
+
+Matrix minor(const Matrix& sourceMat); // Function for calculating the matrix of minors
+
+void printMatrixMinor(const Matrix& sourceMat);
+
+Matrix algebrComplement(const Matrix& sourceMat); // Function for finding an algebraic addition matrix
+
+void printInversMat(const Matrix& sourceMat); // Function for calculating the inverse matrix
 #endif MATRIX_H

@@ -131,3 +131,105 @@ void printTranspose(const Matrix& sourceMat)
 {
 	cout << transpose(sourceMat) << endl;;
 }
+
+int determ(const Matrix& sourceMat) // Function for calculating the determinant of a matrix 
+{
+	if (sourceMat.getCol() == 2) // Calculate the determinant for a 2x2 matrix
+	{
+		return sourceMat.getElement(0, 0) * sourceMat.getElement(1, 1) - sourceMat.getElement(0, 1) * sourceMat.getElement(1, 0);
+	}
+	else if (sourceMat.getCol() == 1) return sourceMat.getElement(0, 0); //  Calculate the determinant for a 1x1 matrix
+	else // The large matrices I'll be laying out on the first row 
+	{
+		Matrix mat(sourceMat.getRow() - 1, sourceMat.getCol() - 1); //For a 3x3 or larger matrix, create a new smaller matrix 
+		int result{ 0 };
+		int matRow, matCol;
+
+		for (int rowFirstLine{ 0 }; rowFirstLine < sourceMat.getRow(); rowFirstLine++) // Calculate the determinant by the first row
+		{
+			matRow = 0;
+			for (int row{ 1 }; row < sourceMat.getRow(); row++) // Count the determinants of smaller matrices, starting from the second row
+			{
+				matCol = 0;
+				for (int col{ 0 }; col < sourceMat.getCol(); col++) // Going through the elements in each row 
+					if (col != rowFirstLine) // If the element number of the row does not match the number of the element of the first row (which I use to calculate the determinant)
+					{
+						mat.setElement(matRow, matCol, sourceMat.getElement(row, col)); // then I write this element in a new table
+						matCol++;
+					}
+				matRow++;
+			}
+			result += pow(-1, rowFirstLine + 2) * sourceMat.getElement(0, rowFirstLine) * determ(mat); // Recursively count det
+		}
+		return result;
+	}
+}
+
+void printDeterm(const Matrix& sourceMat)
+{
+	cout << determ(sourceMat) << endl;
+}
+
+Matrix minor(const Matrix& sourceMat) // Function for calculating a matrix of minors 
+{
+	Matrix minorMat(sourceMat.getRow(), sourceMat.getCol()); // Create a new matrix (minority matrix)
+
+	for (int rowMinorMat{ 0 }; rowMinorMat < sourceMat.getRow(); rowMinorMat++)
+	{
+		for (int colMinorMat{ 0 }; colMinorMat < sourceMat.getCol(); colMinorMat++) // Go through it and set each element 
+		{
+			Matrix smalMat(sourceMat.getRow() - 1, sourceMat.getCol() - 1); // To calculate the determinant, create a smaller matrix 
+			int rowSmalMat, colSmalMat;
+			rowSmalMat = 0;
+			for (int rowSourceMat{ 0 }; rowSourceMat < sourceMat.getRow(); rowSourceMat++) // Iterate over the source matrix 
+			{
+				colSmalMat = 0;
+				for (int colSourceMat{ 0 }; colSourceMat < sourceMat.getCol(); colSourceMat++)
+				{
+					if (rowSourceMat != rowMinorMat && colSourceMat != colMinorMat) // If the row and column number of this element does not match the row and column number of the element we are counting, we write this element in a matrix(mat)
+					{
+						smalMat.setElement(rowSmalMat, colSmalMat, sourceMat.getElement(rowSourceMat, colSourceMat));
+						colSmalMat++;
+						if (colSmalMat == smalMat.getCol()) // If you have filled in a line, move to a new line 
+							rowSmalMat++;
+					}
+				}
+			}
+			minorMat.setElement(rowMinorMat, colMinorMat, determ(smalMat)); // Write the determinant of the smaller matrix into the matrix of minors
+		}
+	}
+	return minorMat;
+}
+
+void printMatrixMinor(const Matrix& sourceMat)
+{
+	cout << minor(sourceMat) << endl;
+}
+
+Matrix algebrComplement(const Matrix& sourceMat) // Function for finding an algebraic addition matrix
+{
+	Matrix mat(sourceMat.getRow(), sourceMat.getCol());
+	for (int row{ 0 }; row < sourceMat.getRow(); row++)
+	{
+		for (int col{ 0 }; col < sourceMat.getCol(); col++)
+			mat.setElement(row, col, sourceMat.getElement(row, col) * pow(-1, row + col));
+	}
+
+	return mat;
+}
+
+void printInversMat(const Matrix& sourceMat) // Function for calculating the inverse matrix
+{
+	int det = determ(sourceMat);
+
+	Matrix minorMat(minor(sourceMat));
+	Matrix algebrComplementMat(algebrComplement(minorMat));		// Find the transpose algebraic addition matrix
+
+	Matrix mat(transpose(algebrComplementMat));
+
+	if (det == 0)
+		cout << "The determinant is zero. There is no inverse matrix";
+	else
+		cout << "1/" << det << " * M\n\n M =" << mat;
+}
+

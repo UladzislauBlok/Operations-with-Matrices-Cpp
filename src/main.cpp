@@ -5,9 +5,7 @@ int main()
 {
 	Matrix mat(3, 3);
 	mat.setMatrix();
-	printMinusMat(mat);
-	printMultiplicationByNum(mat);
-	printTranspose(mat);
+	printInversMat(mat);
 
 	return 0;
 }
