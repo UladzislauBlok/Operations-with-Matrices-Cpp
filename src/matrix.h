@@ -1,8 +1,6 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include <memory>
-
 class Matrix
 {
 private:
@@ -19,7 +17,7 @@ public:
 
 	void setElement(int row, int col, int value)
 	{
-		m_matrix[row][col] = value;
+		matrix[row][col] = value;
 	}
 
 	void setMatrix();
@@ -36,7 +34,23 @@ public:
 
 	int getElement(int row, int col) const
 	{
-		return m_matrix[row][col];
+		return matrix[row][col];
 	}
+
+	friend std::ostream& operator<<(std::ostream& out, const Matrix& sourceMat);
 };
+
+Matrix minusMat(const Matrix& sourceMat); // function to take the minus out of the matrix
+
+void printMinusMat(const Matrix& sourceMat); 
+
+Matrix multiplicationByNum(const Matrix& sourceMat); // function for multiplying a matrix by a number
+
+void printMultiplicationByNum(const Matrix& sourceMat);
+
+Matrix transpose(const Matrix& sourceMat); // function for transposing a matrix 
+
+void printTranspose(const Matrix& sourceMat);
+
+
 #endif MATRIX_H
