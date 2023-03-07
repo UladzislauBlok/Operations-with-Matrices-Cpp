@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "matrix.h"
 
 using namespace std;
@@ -114,7 +115,7 @@ Matrix multiplicationByNum(const Matrix& sourceMat) // function for multiplying 
 
 void printMultiplicationByNum(const Matrix& sourceMat)
 {
-	cout << multiplicationByNum(sourceMat) << endl;;
+	cout << multiplicationByNum(sourceMat) << endl;
 }
 
 Matrix transpose(const Matrix& sourceMat)
@@ -167,7 +168,10 @@ int determ(const Matrix& sourceMat) // Function for calculating the determinant 
 
 void printDeterm(const Matrix& sourceMat)
 {
-	cout << determ(sourceMat) << endl;
+	if (sourceMat.getCol() == sourceMat.getRow())
+		cout << "Det = " << determ(sourceMat);
+	else
+		cout << "This operation is only possible with a square matrix\n";
 }
 
 Matrix minor(const Matrix& sourceMat) // Function for calculating a matrix of minors 
@@ -220,17 +224,22 @@ Matrix algebrComplement(const Matrix& sourceMat) // Function for finding an alge
 
 void printInversMat(const Matrix& sourceMat) // Function for calculating the inverse matrix
 {
-	int det = determ(sourceMat);
+	if (sourceMat.getCol() == sourceMat.getRow())
+	{
+		int det = determ(sourceMat);
 
-	Matrix minorMat(minor(sourceMat));
-	Matrix algebrComplementMat(algebrComplement(minorMat));		// Find the transpose algebraic addition matrix
+		Matrix minorMat(minor(sourceMat));
+		Matrix algebrComplementMat(algebrComplement(minorMat));		// Find the transpose algebraic addition matrix
 
-	Matrix mat(transpose(algebrComplementMat));
+		Matrix mat(transpose(algebrComplementMat));
 
-	if (det == 0)
-		cout << "The determinant is zero. There is no inverse matrix";
+		if (det == 0)
+			cout << "The determinant is zero. There is no inverse matrix";
+		else
+			cout << "1/" << det << " * M\n\n M =" << mat;
+	}
 	else
-		cout << "1/" << det << " * M\n\n M =" << mat;
+		cout << "This operation is only possible with a square matrix\n";
 }
 
 Matrix adding(const Matrix& sourceMat) // Function for adding matrices
