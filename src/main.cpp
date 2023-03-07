@@ -3,9 +3,9 @@
 
 int main()
 {
-	Matrix mat(3, 3);
+	Matrix mat(2, 2);
 	mat.setMatrix();
-	printInversMat(mat);
+	printMultiplicationByMat(mat);
 
 	return 0;
 }

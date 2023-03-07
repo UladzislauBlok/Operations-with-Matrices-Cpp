@@ -233,3 +233,83 @@ void printInversMat(const Matrix& sourceMat) // Function for calculating the inv
 		cout << "1/" << det << " * M\n\n M =" << mat;
 }
 
+Matrix adding(const Matrix& sourceMat) // Function for adding matrices
+{
+	Matrix secondMat(sourceMat.getRow(), sourceMat.getCol());
+	secondMat.setMatrix();
+
+	for (int row{ 0 }; row < secondMat.getRow(); row++)
+		for (int col{ 0 }; col < secondMat.getCol(); col++)
+			secondMat.setElement(row, col, (sourceMat.getElement(row, col) + secondMat.getElement(row, col))); // Overwrite the matrix "mat" elements with the sums
+
+	return secondMat;
+}
+
+void printAdding(const Matrix& sourceMat)
+{
+	cout << "This operation is only possible with matrices of the same size\n"
+		    "Enter the elements of the second matrix \n";
+	
+	cout << adding(sourceMat) << endl;
+}
+
+Matrix subtracting(const Matrix& sourceMat) // Function for subtracting matrices
+{
+	cout << "This operation is only possible with matrices of the same size\n";
+
+	Matrix secondMat(sourceMat.getRow(), sourceMat.getCol());
+
+	for (int row{ 0 }; row < secondMat.getRow(); row++)
+		for (int col{ 0 }; col < secondMat.getCol(); col++)
+			secondMat.setElement(row, col, (sourceMat.getElement(row, col) - secondMat.getElement(row, col))); // Overwrite the matrix "mat" elements with the subtract
+
+	return secondMat;
+}
+
+void printSubtracting(const Matrix& sourceMat)
+{
+	cout << "This operation is only possible with matrices of the same size\n"
+			"Enter the elements of the second matrix \n";
+
+	cout << subtracting(sourceMat) << endl;
+}
+
+Matrix multiplicationByMat(const Matrix& sourceMat, int rowSecondMat, int colSecondMat) // function for multiplying a matrix by a matrix 
+{
+	Matrix secondMat(rowSecondMat, colSecondMat);
+	secondMat.setMatrix();
+
+	Matrix result(sourceMat.getRow(), secondMat.getCol()); // Create a matrix with the number of rows from the first matrix and the number of columns from the second matrix
+
+	for (int row{ 0 }; row < result.getRow(); row++)
+		for (int col{ 0 }; col < result.getCol(); col++)
+		{
+			int temp{ 0 }; //the value of each element will be read into "temp" and then transferred to the matrix 
+			for (int count{ 0 }; count < sourceMat.getCol(); count++) // it makes no difference whether to take the number of columns of the first matrix or the number of rows of the second, because they are equal
+			{
+				temp += sourceMat.getElement(row, count) * secondMat.getElement(count, col);
+			}
+			result.setElement(row, col, temp);
+		}
+	return result;
+}
+
+void printMultiplicationByMat(const Matrix& sourceMat)
+{
+	cout << "The operation is only possible if the number of columns of the first matrix equals the number of rows of the second matrix\n";
+	int rowSecondMat, colSecondMat;
+	cout << "Enter the dimensions of the second matrix(ROWxCOL) \n";
+	cin >> rowSecondMat >> colSecondMat;
+	if (sourceMat.getCol() != rowSecondMat)
+	{
+		cout << "The number of columns of the first matrix does not equal the number of rows of the second matrix.\n"
+			"The operation is not possible\n";
+		return ;
+	}
+	else
+	{
+		cout << "Enter the elements of the second matrix" << endl;
+		cout << multiplicationByMat(sourceMat, rowSecondMat, colSecondMat);
+	}
+}
+

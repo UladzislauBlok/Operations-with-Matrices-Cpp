@@ -63,4 +63,16 @@ void printMatrixMinor(const Matrix& sourceMat);
 Matrix algebrComplement(const Matrix& sourceMat); // Function for finding an algebraic addition matrix
 
 void printInversMat(const Matrix& sourceMat); // Function for calculating the inverse matrix
+
+Matrix adding(const Matrix& sourceMat); // Function for adding matrices
+
+void printAdding(const Matrix& sourceMat);
+
+Matrix subtracting(const Matrix& sourceMat); // Function for subtracting matrices
+
+void printSubtracting(const Matrix& sourceMat);
+
+Matrix multiplicationByMat(const Matrix& sourceMat, int rowSecondMat, int colSecondMat); // function for multiplying a matrix by a matrix 
+
+void printMultiplicationByMat(const Matrix& sourceMat);
 #endif MATRIX_H
