@@ -130,7 +130,7 @@ Matrix transpose(const Matrix& sourceMat)
 
 void printTranspose(const Matrix& sourceMat)
 {
-	cout << transpose(sourceMat) << endl;;
+	cout << transpose(sourceMat) << endl;
 }
 
 int determ(const Matrix& sourceMat) // Function for calculating the determinant of a matrix 
