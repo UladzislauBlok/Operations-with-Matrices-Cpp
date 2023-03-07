@@ -85,7 +85,7 @@ Matrix minusMat(const Matrix& sourceMat) // function to take the minus out of th
 
 void printMinusMat(const Matrix& sourceMat)
 {
-	cout << minusMat(sourceMat) << endl;;
+	cout << minusMat(sourceMat) << endl;
 }
 
 Matrix multiplicationByNum(const Matrix& sourceMat) // function for multiplying a matrix by a number
